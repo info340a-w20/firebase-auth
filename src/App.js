@@ -18,80 +18,41 @@ class App extends Component {
     }
     componentDidMount() {
         // Listen to state authentication state change
-        firebase.auth().onAuthStateChanged((user) => {
-            // If there is a user, set the state of `user`
-            if (user) {
-                this.setState({
-                    user: user,
-                    email: '',
-                    password: '',
-                    errorMessage: ''
-                });
-            } else {
-                this.setState({ user: null });
-            }
 
-        });
+        // If there is a user, set the state of `user`
+
+
     }
     // Method for handling changes to forms
     handleChange(event) {
-        let field = event.target.name; // which input
-        let value = event.target.value; // what value
 
-        let changes = {}; // object to hold changes
-        changes[field] = value; // change this field
-        this.setState(changes); // update state
     }
     // Method for handling someone signing up 
     handleSignUp() {
 
-        // Create a new user and save their information
-        firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
-            .then(() => {
-                // Update the display name of the user
-                let profilePromise = firebase.auth().currentUser.updateProfile({
-                    displayName: this.state.username
-                });
+        // Create a new user and save their information, THEN
+        // - Update the display name of the user
 
-                // Return promise for chaining
-                return profilePromise;
-            })
-            .then(() => {
-                // Set the state as the current (firebase) user
-                this.setState({
-                    user: firebase.auth().currentUser,
-                    username: ''
-                });
-            })
-            .catch((err) => {
-                this.setState({ errorMessage: err.message });
-            });
+        // - Return promise for chaining, THEN
+        // - Set the state as the current (firebase) user
+
     }
 
     // Method for handling someone signing in
     handleSignIn() {
-        // Sign in the user 
-        firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
-            .catch((err) => {
-                this.setState({ errorMessage: err.message });
-            });
+        // Sign in the user -- this will trigger the onAuthStateChanged() method
+
     }
 
     // Method for handling someone signing out
     handleSignOut() {
         // Sign out the user -- this will trigger the onAuthStateChanged() method
-        firebase.auth().signOut()
-            .catch((err) => {
-                this.setState({ errorMessage: err.message });
-            });
+
     }
     render() {
-        let userDiv = this.state.user === null ? "" : <div>Hello, {this.state.user.displayName}</div>;
-        let errorDiv = this.state.errorMessage === "" ? "" : <div className="alert alert-danger">Error: {this.state.errorMessage}</div>
+        // Create (and render) divs to welcome the user / show errors 
         return (
             <div className="container">
-                {errorDiv}
-                {userDiv}
                 <div className="form-group">
                     <label>Email:</label>
                     <input className="form-control"
