@@ -16,7 +16,7 @@ In your `src/index.js` file, do the following:
 
 1. Import necessary modules: `firebase` (from `'firebase/app'`), and bootstrap styles (`'bootstrap/dist/css/bootstrap.css'`).
 
-2. **Copy and paste** the configuration object from the Firebase web console for the project and pass the configuration object into the `firebase.initializeApp()` function. Do this _before_ you render your `<App>`.
+2. **Copy and paste** the configuration object from the Firebase web console into a new script `Config.js`. Make sure to **add this filename** to your `.gitignore` file (so that your private key isn't added to GitHub). Then, import that object into your `index.js` script and pass the `config` object into the `firebase.initializeApp()` function. Do this _before_ you render your `<App>`.
 
 You are now ready to integrate the app into your application.
 
